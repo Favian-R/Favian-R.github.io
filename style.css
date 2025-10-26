@@ -39,7 +39,7 @@ body {
 /* hero section */
 .hero {
     height: 100vh;
-    background-image: url('bg-hero.jpg');
+    background-image: url("bg-hero.jpg");
     background-size: cover;      /* gambar penuh */
     background-position: center; /* posisi fokus di tengah */
     background-repeat: no-repeat;
@@ -49,18 +49,6 @@ body {
     text-align: center;
     padding: 0 40px; /* memberi ruang kiri dan kanan */
     position: relative;
-}
-
-/* Tambahkan overlay agar teks lebih mudah dibaca */
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45); /* sesuaikan gelap/terangnya */
-    z-index: 1;
 }
 
 .hero-content {
