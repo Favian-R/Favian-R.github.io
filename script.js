@@ -9,10 +9,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// script.js (di folder portfolio-web)
+
 // ==========================================================
-// PENTING: GANTI DENGAN URL API PUBLIK ANDA SETELAH DI-DEPLOY
+// PENTING: GANTI DENGAN URL API PUBLIK VERCEL ANDA SETELAH DI-DEPLOY
 // ==========================================================
-// Contoh: const BASE_API_URL = 'https://api-portofolio-ivory.vercel.app/api';
+// Contoh: const BASE_API_URL = 'https://favian-portfolio-api-xyz.vercel.app/api';
 const BASE_API_URL = 'http://localhost:3000/api'; 
 
 // ==========================================================
@@ -29,7 +31,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ==========================================================
-// B. Fungsi Utama Fetch & Render
+// B. Fungsi Fetch dan Render Utama
 // ==========================================================
 
 async function fetchData(endpoint) {
@@ -42,76 +44,78 @@ async function fetchData(endpoint) {
         return result.data;
     } catch (error) {
         console.error(`Error fetching ${endpoint}:`, error.message);
-        return null; // Kembalikan null jika gagal
+        return null; 
     }
 }
 
 // ----------------------------------------------------------
-// 1. Render Profil & Hero
+// 1. Render Profil & Hero (Data dari /api/profile)
 // ----------------------------------------------------------
 async function renderProfile() {
     const profile = await fetchData('/profile');
     if (!profile) return;
 
-    // Bagian Hero
-    const heroTitle = document.querySelector('.hero-content h1');
-    const heroSubtitle = document.querySelector('.hero-content p');
-    if (heroTitle) heroTitle.textContent = `Hi, Saya ${profile.name}`;
-    if (heroSubtitle) heroSubtitle.textContent = profile.title || "Web Developer & Desainer"; 
+    // Navbar & Hero
+    document.getElementById('navbar-logo').textContent = profile.name || "Portofolio";
+    document.getElementById('hero-title').textContent = `Hi, Saya ${profile.name}` || "Hi!";
+    document.getElementById('hero-subtitle').textContent = profile.title || "Desainer Grafis";
 
-    // Bagian Navbar Logo (Opsional, jika ingin dinamis)
-    const logo = document.querySelector('.logo');
-    if (logo) logo.textContent = profile.name || "Portofolio";
-
-    // Bagian About
-    const aboutImg = document.querySelector('.about-img img');
-    const aboutTitle = document.querySelector('.about-text h2');
-    const aboutIntro = document.querySelector('.about-text p:nth-child(2)');
-    const aboutDesc = document.querySelector('.about-text p:nth-child(3)');
+    // About
+    const aboutImg = document.getElementById('about-img');
+    const aboutIntro = document.getElementById('about-intro');
+    const aboutDesc = document.getElementById('about-desc');
     
-    if (aboutImg && profile.image) aboutImg.src = profile.image; 
-    if (aboutTitle) aboutTitle.textContent = "Tentang Saya"; // Tetap statis
-    if (aboutIntro) aboutIntro.innerHTML = `Halo! Saya **${profile.name}**, ${profile.about.intro}`; 
-    if (aboutDesc) aboutDesc.textContent = profile.about.description;
+    if (aboutImg) aboutImg.src = profile.image || aboutImg.src; 
+    if (aboutIntro) aboutIntro.innerHTML = `Halo! Saya **${profile.name}**, ${profile.about.intro}` || 'Intro gagal dimuat.'; 
+    if (aboutDesc) aboutDesc.textContent = profile.about.description || 'Deskripsi gagal dimuat.';
+
+    // Footer
+    const footerText = document.getElementById('footer-text');
+    if (footerText) footerText.textContent = `© ${new Date().getFullYear()} ${profile.name}. All rights reserved.`;
+
 }
 
 // ----------------------------------------------------------
-// 2. Render Skills
+// 2. Render Skills (Data dari /api/skills)
 // ----------------------------------------------------------
 async function renderSkills() {
     const skills = await fetchData('/skills');
-    if (!skills) return;
+    const skillsContainer = document.getElementById('skills-grid');
+    if (!skills || !skillsContainer) return;
+
+    skillsContainer.innerHTML = ''; // Bersihkan loading state
+
+    // Gabungkan Hard dan Soft Skills
+    const hardSkillsMap = {
+        "Desain Logo": "Membuat desain logo sesuai kebutuhan, baik minimalis, modern, elegan dan sebagainya",
+        "Poster": "Menciptakan desain poster yang menarik dan dapat menyesuaikan dengan genre dan pesan yang ingin disampaikan",
+        "UI/UX": "Membuat design UI yang clean dan responsif"
+    };
     
-    // Asumsi: Bagian skills Anda menggunakan class/ID seperti yang ada di panduan sebelumnya:
-    // <section class="skills" id="skills">
-    //     <div class="skills-soft"></div>
-    //     <div class="skills-hard"></div>
-    // </section>
-
-    const skillsContainer = document.querySelector('.skills-grid'); // Menggunakan container dari panduan sebelumnya
-    if (!skillsContainer) return;
-
-    skillsContainer.innerHTML = ''; // Bersihkan konten
-
-    // Gabungkan Soft dan Hard Skills ke dalam satu array untuk rendering kartu yang konsisten
     const allSkills = [
-        ...skills.softSkills.map(s => ({ name: s, type: 'soft' })),
-        ...skills.hardSkills.map(s => ({ name: s, type: 'hard' }))
+        ...skills.hardSkills.map(s => ({ name: s, type: 'hard', desc: hardSkillsMap[s] || "Keahlian teknis yang dikuasai." })),
+        ...skills.softSkills.map(s => ({ name: s, type: 'soft', desc: "Keahlian interpersonal yang penting dalam lingkungan kerja." }))
     ];
 
+    // Placeholder Icons (Gunakan ikon yang Anda sediakan sebelumnya)
+    const iconMap = {
+        "Desain Logo": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+        "Poster": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paintbrush-2"><path d="M18.37 2.63c-1.3-1.3-3.6-1.3-4.9 0l-5.4 5.4c-.9.9-2.2 2.2-2.2 3.7c0 1.5.7 2.4.9 2.7l.6.9c.7 1.1 1.7 2.5 3 3.4l.6.4c.9.6 1.7.9 2.5.9c.8 0 1.6-.3 2.5-.9l.6-.4c1.3-.9 2.3-2.3 3-3.4l.6-.9c.2-.3.9-1.2.9-2.7c0-1.5-1.3-2.8-2.2-3.7l-5.4-5.4zM2 22l2-2.7"/><path d="M12 11h.01"/></svg>`,
+        "UI/UX": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>`,
+        "default_soft": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg>`
+    };
+
+
     allSkills.forEach(skill => {
-        // Ikon Placeholder: ganti dengan ikon SVG/Font yang sesuai
-        const icon = skill.type === 'soft' 
-            ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg>' 
-            : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-laptop"><path d="M20 17H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2z"/><path d="M2 17h20"/><path d="M8 21h8"/></svg>';
+        const iconHTML = iconMap[skill.name] || iconMap['default_soft'];
 
         const cardHTML = `
             <div class="skill-card">
                 <div class="skill-icon">
-                    ${icon}
+                    ${iconHTML}
                 </div>
                 <h3>${skill.name}</h3>
-                <p>(${skill.type === 'soft' ? 'Soft Skill' : 'Hard Skill'})</p>
+                <p>${skill.desc}</p>
             </div>
         `;
         skillsContainer.insertAdjacentHTML('beforeend', cardHTML);
@@ -120,55 +124,59 @@ async function renderSkills() {
 
 
 // ----------------------------------------------------------
-// 3. Render Pengalaman (Jika Anda membuat bagian "Experiences" terpisah)
+// 3. Render Portofolio (Data dari /api/projects)
 // ----------------------------------------------------------
-async function renderExperiences() {
-    const experiences = await fetchData('/experiences');
-    if (!experiences) return;
+async function renderPortfolio() {
+    const projects = await fetchData('/projects'); 
+    const projectsContainer = document.getElementById('projects-container');
+    if (!projects || !projectsContainer) return;
 
-    const expContainer = document.querySelector('.experiences-list'); // Ganti dengan ID/class yang sesuai
-    if (!expContainer) return;
-    
-    expContainer.innerHTML = '';
+    projectsContainer.innerHTML = ''; // Bersihkan loading state
 
-    experiences.forEach(exp => {
-        const expHTML = `
-            <div class="experience-item">
-                <div class="exp-image">
-                    <img src="${exp.image}" alt="${exp.organization}">
+    projects.forEach(project => {
+        // Buat tech tags dari array technologies
+        const techTagsHTML = project.technologies.map(tag => 
+            `<span class="tech-tag">${tag}</span>`
+        ).join('');
+
+        const cardHTML = `
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="${project.imageUrl}" alt="${project.title}">
                 </div>
-                <div class="exp-details">
-                    <h4>${exp.title}</h4>
-                    <p class="organization">${exp.organization} - ${exp.year}</p>
-                    <p>${exp.description}</p>
-                    <a href="${exp.link}" target="_blank" class="exp-link">Lihat Detail</a>
+                <div class="project-content">
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    
+                    <div class="project-tech">
+                        ${techTagsHTML}
+                    </div>
                 </div>
             </div>
         `;
-        expContainer.insertAdjacentHTML('beforeend', expHTML);
+
+        projectsContainer.insertAdjacentHTML('beforeend', cardHTML);
     });
 }
 
+
 // ----------------------------------------------------------
-// 4. Render Kontak
+// 4. Render Kontak (Data dari /api/contact)
 // ----------------------------------------------------------
 async function renderContact() {
     const contact = await fetchData('/contact');
     if (!contact) return;
     
-    const contactEmail = document.querySelector('#contact-email');
-    const contactIG = document.querySelector('#contact-instagram');
-    const contactYT = document.querySelector('#contact-youtube');
-    const contactLI = document.querySelector('#contact-linkedin');
-
-    if (contactEmail) contactEmail.href = `mailto:${contact.email}`;
-    if (contactIG) contactIG.href = contact.instagram;
-    if (contactYT) contactYT.href = contact.youtube;
-    if (contactLI) contactLI.href = contact.linkedin;
+    const emailText = document.getElementById('contact-email-text');
+    const contactIG = document.getElementById('contact-instagram');
+    const contactYT = document.getElementById('contact-youtube');
+    const contactLI = document.getElementById('contact-linkedin');
     
-    // Update teks email di halaman
-    const emailText = document.querySelector('.contact p a');
-    if(emailText) emailText.textContent = contact.email;
+    // Email Link
+    if (emailText) {
+        emailText.href = `mailto:${contact.email}`;
+        emailText.textContent = contact.email;
+    }
 }
 
 
@@ -176,8 +184,6 @@ async function renderContact() {
 document.addEventListener('DOMContentLoaded', () => {
     renderProfile();
     renderSkills();
-    renderExperiences();
+    renderPortfolio(); 
     renderContact();
-    // Jika Anda ingin Portofolio (My Work) mengambil data dari API, 
-    // Anda bisa membuat endpoint /api/projects dan merendernya di sini.
 });
