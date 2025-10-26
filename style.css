@@ -1,0 +1,310 @@
+/* reset sederhana */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background: #fff; /* ubah sesuai tema Figma */
+  color: #333;
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: #fafafa; /* atau warna header dari desain */
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+.nav-links li {
+  margin-left: 20px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* hero section */
+.hero {
+    height: 100vh;
+    background-image: url("hero-bg.jpg");
+    background-size: cover;      /* gambar penuh */
+    background-position: center; /* posisi fokus di tengah */
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;  /* konten vertikal di tengah */
+    justify-content: center; /* konten horizontal di tengah */
+    text-align: center;
+    padding: 0 40px; /* memberi ruang kiri dan kanan */
+    position: relative;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* supaya tampil di atas overlay */
+}
+
+.hero-content h1 {
+    font-size: 3.2rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: #eee;
+}
+
+/* about, portfolio, contact section */
+
+.about {
+    padding: 80px 10%;
+    background: #ffffff;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Jarak antara foto dan teks */
+}
+
+.about-img img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;       /* menjaga proporsi wajah */
+    border-radius: 16px;     /* kotak rounded, bisa dibuat lingkaran */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.about-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+	text-align: center;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+
+.skills {
+    padding: 80px 10%;
+    background: #f7f7f7; /* Warna latar belakang sedikit berbeda */
+}
+
+.skills h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.skills-grid {
+    display: grid;
+    /* Membuat 2 kolom di desktop, dan akan menjadi 1 kolom jika layarnya terlalu kecil */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 25px; /* Jarak antar kartu */
+}
+
+.skill-card {
+    background: #ffffff; /* Latar belakang kartu putih */
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #eee; /* Garis tepi halus */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.skill-icon {
+    width: 50px;
+    height: 50px;
+    background: #f0f8ff; /* Latar belakang ikon */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: #4682B4; /* Warna ikon (Steel Blue) */
+}
+
+.skill-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2; /* Ketebalan garis ikon */
+}
+
+.skill-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.skill-card p {
+    color: #666;
+    line-height: 1.5;
+}
+
+section {
+  padding: 60px 40px;
+}
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Update: projects grid tetap sama */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Ubah minmax agar lebih besar */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Update: Project Card sesuai desain baru */
+.project-card {
+  background: #ffffff; /* Latar putih bersih */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Bayangan lebih halus */
+  transition: transform .3s, box-shadow .3s;
+  border: 1px solid #eee; /* Garis tepi tipis */
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Gambar Proyek */
+.project-image {
+  width: 100%;
+  height: 220px; /* Tinggi tetap untuk gambar */
+  overflow: hidden;
+}
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Pastikan gambar mengisi kotak tanpa terdistorsi */
+}
+
+/* Konten Proyek (Teks & Tombol) */
+.project-content {
+    padding: 20px;
+}
+.project-card h3 {
+  padding: 0; /* Hapus padding lama */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+.project-card p {
+  padding: 0; /* Hapus padding lama */
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Tech Tags (Tag Teknologi) */
+.project-tech {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.tech-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #f0f4f7; /* Latar belakang tag abu-abu muda */
+    color: #444;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.project-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px; /* Jarak dari tag teknologi */
+}
+
+.project-links a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+    flex-grow: 1; /* Agar tombol memiliki lebar yang sama */
+}
+
+/* Tombol Code (Warna primer) */
+.btn-code {
+    background: #fff;
+    color: #4682B4; /* Warna biru konsisten dengan skill icon */
+    border: 2px solid #ddd;
+}
+.btn-code:hover {
+    background: #f0f4f7;
+}
+
+/* Tombol Demo (Warna sekunder/Bold) */
+.btn-demo {
+    background: #222; /* Hitam solid */
+    color: #fff;
+    border: 2px solid #222;
+}
+.btn-demo:hover {
+    background: #444;
+    border-color: #444;
+}
+
+/* Styling Ikon di Tombol */
+.project-links a svg {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+}
+
+.btn-code svg {
+    stroke: #4682B4; /* Ikon biru */
+}
+.btn-demo svg {
+    stroke: #fff; /* Ikon putih */
+}
+
+/* contact */
+.btn-secondary {
+  display: inline-block;
+  padding: 10px 30px;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+footer {
+  text-align: center;
+  padding: 20px 0;
+  background: #222;
+  color: #fff;
+}
