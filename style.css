@@ -38,16 +38,31 @@ body {
 
 /* hero section */
 .hero {
-  height: 80vh;
-  background-image: url("bg-hero.jpg");
-  background-size: cover;      /* gambar penuh */
-  background-position: center; /* posisi fokus di tengah */
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff; /* atau sesuai */
+    height: 100vh;
+    background: url('images/hero-bg.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;  /* konten vertikal di tengah */
+    justify-content: center; /* konten horizontal di tengah */
+    text-align: center;
+    padding: 0 40px; /* memberi ruang kiri dan kanan */
+    position: relative;
+}
+
+/* Tambahkan overlay agar teks lebih mudah dibaca */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45); /* sesuaikan gelap/terangnya */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* supaya tampil di atas overlay */
 }
 
 .hero-content h1 {
@@ -58,7 +73,7 @@ body {
 
 .hero-content p {
     font-size: 1.2rem;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     color: #eee;
 }
 
