@@ -15,7 +15,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // PENTING: GANTI DENGAN URL API PUBLIK VERCEL ANDA SETELAH DI-DEPLOY
 // ==========================================================
 // Contoh: const BASE_API_URL = 'https://favian-portfolio-api-xyz.vercel.app/api';
-const BASE_API_URL = 'http://localhost:3000/api'; 
+const BASE_API_URL = 'https://favian-portfolio-api.vercel.app/'; 
 
 // ==========================================================
 // A. Logika Smooth Scroll
