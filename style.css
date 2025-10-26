@@ -50,11 +50,6 @@ body {
   color: #fff; /* atau sesuai */
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2; /* supaya tampil di atas overlay */
-}
-
 .hero-content h1 {
     font-size: 3.2rem;
     margin-bottom: 20px;
