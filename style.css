@@ -39,7 +39,10 @@ body {
 /* hero section */
 .hero {
     height: 100vh;
-    background-images: url('hero-bg.jpg') center/cover no-repeat;
+    background-image: url("bg-hero.jpg");
+    background-size: cover;      /* gambar penuh */
+    background-position: center; /* posisi fokus di tengah */
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;  /* konten vertikal di tengah */
     justify-content: center; /* konten horizontal di tengah */
